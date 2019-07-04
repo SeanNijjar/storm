@@ -57,6 +57,10 @@ public class LoadAwareShuffleGrouping implements LoadAwareCustomStreamGrouping, 
     private double higherBound;
     private double lowerBound;
 
+    public int[] getChoices() {
+        return choices;
+    }
+
     @Override
     public void prepare(WorkerTopologyContext context, GlobalStreamId stream, List<Integer> targetTasks) {
         random = new Random();

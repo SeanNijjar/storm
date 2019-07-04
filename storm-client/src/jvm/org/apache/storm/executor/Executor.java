@@ -117,6 +117,9 @@ public abstract class Executor implements Callable, JCQueue.Consumer {
     protected int idToTaskBase;
     protected String hostname;
 
+    // Sean Nijjar - made public for Thesis proof of concept
+    public Map<Integer, String> getTaskToComponent() { return taskToComponent; }
+
     protected Executor(WorkerState workerData, List<Long> executorId, Map<String, String> credentials, String type) {
         this.workerData = workerData;
         this.executorId = executorId;

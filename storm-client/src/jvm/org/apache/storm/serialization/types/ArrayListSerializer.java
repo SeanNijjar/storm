@@ -20,7 +20,8 @@ import java.util.Collection;
 
 
 public class ArrayListSerializer extends CollectionSerializer {
-    @Override
+    //@Override
+    // SeanNijjar
     public Collection create(Kryo kryo, Input input, Class<Collection> type) {
         return new ArrayList();
     }

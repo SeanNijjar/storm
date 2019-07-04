@@ -47,6 +47,9 @@ public class BoltOutputCollectorImpl implements IOutputCollector {
     private final boolean isDebug;
     private boolean ackingEnabled;
 
+    // SEAN NIJJAR - added for Thesis Proof of Concept
+    public BoltExecutor getExecutor() { return executor; }
+
     public BoltOutputCollectorImpl(BoltExecutor executor, Task taskData, Random random,
                                    boolean isEventLoggers, boolean ackingEnabled, boolean isDebug) {
         this.executor = executor;

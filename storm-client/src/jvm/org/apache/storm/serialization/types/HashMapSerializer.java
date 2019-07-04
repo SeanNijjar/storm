@@ -20,7 +20,8 @@ import java.util.Map;
 
 
 public class HashMapSerializer extends MapSerializer {
-    @Override
+    //@Override
+    // SeanNijjar
     public Map<String, Object> create(Kryo kryo, Input input, Class<Map> type) {
         return new HashMap<>();
     }

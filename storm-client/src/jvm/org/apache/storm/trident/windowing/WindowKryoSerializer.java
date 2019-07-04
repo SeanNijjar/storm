@@ -41,7 +41,9 @@ public class WindowKryoSerializer {
      * @param obj Object to be serialized.
      */
     public byte[] serialize(Object obj) {
-        output.clear();
+        //output.clear();
+        // SEAN NIJJAR
+        output.reset();
         kryo.writeClassAndObject(output, obj);
         return output.toBytes();
     }
@@ -52,7 +54,9 @@ public class WindowKryoSerializer {
      * @param obj Object to be serialized.
      */
     public ByteBuffer serializeToByteBuffer(Object obj) {
-        output.clear();
+        //output.clear();
+        // SEAN NIJJAR
+        output.reset();
         kryo.writeClassAndObject(output, obj);
         return ByteBuffer.wrap(output.getBuffer(), 0, output.position());
     }

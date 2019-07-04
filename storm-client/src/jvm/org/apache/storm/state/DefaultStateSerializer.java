@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.esotericsoftware.kryo.util.DefaultInstantiatorStrategy;
 import org.apache.storm.Config;
 import org.apache.storm.serialization.KryoTupleDeserializer;
 import org.apache.storm.serialization.KryoTupleSerializer;
@@ -49,7 +51,9 @@ public class DefaultStateSerializer<T> implements Serializer<T> {
             if (!registrations.isEmpty()) {
                 SerializationFactory.register(obj, registrations);
             }
-            obj.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
+            //obj.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
+            // SEAN NIJJAR
+            obj.setInstantiatorStrategy(new DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
             return obj;
         }
     };
@@ -86,7 +90,9 @@ public class DefaultStateSerializer<T> implements Serializer<T> {
 
     @Override
     public byte[] serialize(T obj) {
-        output.get().clear();
+        //output.get().clear();
+        // SEAN NIJJAR
+        output.get().reset();
         kryo.get().writeClassAndObject(output.get(), obj);
         return output.get().toBytes();
     }
@@ -114,7 +120,9 @@ public class DefaultStateSerializer<T> implements Serializer<T> {
         }
 
         @Override
-        public TupleImpl read(Kryo kryo, Input input, Class<TupleImpl> type) {
+        //public TupleImpl read(Kryo kryo, Input input, Class<TupleImpl> type) {
+        // SEAN NIJJAR
+        public TupleImpl read(Kryo kryo, Input input, Class<? extends TupleImpl> type) {
             int length = input.readInt();
             byte[] bytes = input.readBytes(length);
             return tupleDeserializer.deserialize(bytes);

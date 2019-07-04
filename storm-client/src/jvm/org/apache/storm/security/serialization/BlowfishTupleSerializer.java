@@ -92,8 +92,11 @@ public class BlowfishTupleSerializer extends Serializer<ListDelegate> {
         kryo.writeObject(output, object, serializer);
     }
 
+
     @Override
-    public ListDelegate read(Kryo kryo, Input input, Class<ListDelegate> type) {
+    // SEAN NIJJAR
+    //public ListDelegate read(Kryo kryo, Input input, Class<ListDelegate> type) {
+    public ListDelegate read(Kryo kryo, Input input, Class<? extends ListDelegate> type) {
         return kryo.readObject(input, ListDelegate.class, serializer);
     }
 }

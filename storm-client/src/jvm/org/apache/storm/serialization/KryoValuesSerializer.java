@@ -39,13 +39,17 @@ public class KryoValuesSerializer {
     }
 
     public byte[] serialize(List<Object> values) {
-        _kryoOut.clear();
+        //_kryoOut.clear();
+        // SEAN NIJJAR
+        _kryoOut.reset();
         serializeInto(values, _kryoOut);
         return _kryoOut.toBytes();
     }
 
     public byte[] serializeObject(Object obj) {
-        _kryoOut.clear();
+        //_kryoOut.clear();
+        // SEAN NIJJAR
+        _kryoOut.reset();
         _kryo.writeClassAndObject(_kryoOut, obj);
         return _kryoOut.toBytes();
     }
