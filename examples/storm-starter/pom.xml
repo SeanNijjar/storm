@@ -69,6 +69,8 @@
         <groupId>org.apache.storm</groupId>
         <artifactId>storm-clojure</artifactId>
         <version>${project.version}</version>
+        <!--<scope>system</scope>-->
+        <!--<systemPath>${path.storm}</systemPath>-->
     </dependency>
     <dependency>
         <groupId>org.apache.storm</groupId>
@@ -97,16 +99,22 @@
           <groupId>org.apache.storm</groupId>
           <artifactId>multilang-javascript</artifactId>
           <version>${project.version}</version>
+          <!--<scope>system</scope>-->
+          <!--<systemPath>${path.storm}</systemPath>-->
       </dependency>
       <dependency>
           <groupId>org.apache.storm</groupId>
           <artifactId>multilang-ruby</artifactId>
           <version>${project.version}</version>
+          <!--<scope>system</scope>-->
+          <!--<systemPath>${path.storm}</systemPath>-->
       </dependency>
       <dependency>
           <groupId>org.apache.storm</groupId>
           <artifactId>multilang-python</artifactId>
           <version>${project.version}</version>
+          <!--<scope>system</scope>-->
+          <!--<systemPath>${path.storm}</systemPath>-->
       </dependency>
     <dependency>
       <groupId>commons-collections</groupId>
@@ -120,21 +128,29 @@
       <groupId>org.apache.storm</groupId>
       <artifactId>storm-metrics</artifactId>
       <version>${project.version}</version>
+      <!--<scope>system</scope>-->
+      <!--<systemPath>${path.storm}</systemPath>-->
     </dependency>
     <dependency>
       <groupId>org.apache.storm</groupId>
       <artifactId>storm-hdfs</artifactId>
       <version>${project.version}</version>
+      <!--<scope>system</scope>-->
+      <!--<systemPath>${path.storm}</systemPath>-->
     </dependency>
       <dependency>
           <groupId>org.apache.storm</groupId>
           <artifactId>storm-hbase</artifactId>
           <version>${project.version}</version>
+          <!--<scope>system</scope>-->
+          <!--<systemPath>${path.storm}</systemPath>-->
       </dependency>
     <dependency>
       <groupId>org.apache.storm</groupId>
       <artifactId>storm-redis</artifactId>
       <version>${project.version}</version>
+      <!--<scope>system</scope>-->
+      <!--<systemPath>${path.storm}</systemPath>-->
     </dependency>
   </dependencies>
 
@@ -229,7 +245,7 @@
           <artifactId>maven-checkstyle-plugin</artifactId>
           <!--Note - the version would be inherited-->
           <configuration>
-              <maxAllowedViolations>263</maxAllowedViolations>
+              <maxAllowedViolations>500</maxAllowedViolations>
           </configuration>
       </plugin>
     </plugins>
