@@ -64,7 +64,7 @@ public class ClientSupervisorUtils {
                                              final Map<String, String> environment, final String logPreFix)
         throws IOException {
         int ret = 0;
-        Process process = processLauncher(conf, user, null, args, environment, logPreFix, null, null);
+        Process process = processLauncher(conf, user, null, args, environment, null, null, null);
         if (StringUtils.isNotBlank(logPreFix)) {
             Utils.readAndLogStream(logPreFix, process.getInputStream());
         }
@@ -139,6 +139,7 @@ public class ClientSupervisorUtils {
         }
         if (logPrefix != null || exitCodeCallback != null) {
             Utils.asyncLoop(new Callable<Long>() {
+                @Override
                 public Long call() {
                     if (logPrefix != null) {
                         Utils.readAndLogStream(logPrefix,

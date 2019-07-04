@@ -39,7 +39,6 @@ import org.apache.storm.utils.Utils;
  * @see org.apache.storm.blobstore.NimbusBlobStore
  */
 public abstract class ClientBlobStore implements Shutdownable, AutoCloseable {
-    protected Map<String, Object> conf;
 
     public static void withConfiguredClient(WithBlobstore withBlobstore) throws Exception {
         Map<String, Object> conf = ConfigUtils.readStormConfig();
@@ -171,6 +170,7 @@ public abstract class ClientBlobStore implements Shutdownable, AutoCloseable {
      */
     public abstract void createStateInZookeeper(String key);
 
+    @Override
     public abstract void close();
 
     /**

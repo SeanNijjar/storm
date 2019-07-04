@@ -48,14 +48,15 @@ import org.apache.storm.utils.Utils;
  * to.
  */
 public class TopologyContext extends WorkerTopologyContext implements IMetricsContext {
-    private Integer _taskId;
-    private Map<String, Object> _taskData = new HashMap<>();
-    private List<ITaskHook> _hooks = new ArrayList<>();
-    private Map<String, Object> _executorData;
-    private Map<Integer, Map<Integer, Map<String, IMetric>>> _registeredMetrics;
-    private AtomicBoolean _openOrPrepareWasCalled;
+    private final Integer _taskId;
+    private final Map<String, Object> _taskData = new HashMap<>();
+    private final List<ITaskHook> _hooks = new ArrayList<>();
+    private final Map<String, Object> _executorData;
+    private final Map<Integer, Map<Integer, Map<String, IMetric>>> _registeredMetrics;
+    private final AtomicBoolean _openOrPrepareWasCalled;
+    private final StormMetricRegistry metricRegistry;
     // This is updated by the Worker and the topology has shared access to it
-    private Map<String, Long> blobToLastKnownVersion;
+    private final Map<String, Long> blobToLastKnownVersion;
 
     public TopologyContext(StormTopology topology,
                            Map<String, Object> topoConf,
@@ -73,10 +74,12 @@ public class TopologyContext extends WorkerTopologyContext implements IMetricsCo
                            Map<String, Object> userResources,
                            Map<String, Object> executorData,
                            Map<Integer, Map<Integer, Map<String, IMetric>>> registeredMetrics,
-                           AtomicBoolean openOrPrepareWasCalled) {
+                           AtomicBoolean openOrPrepareWasCalled,
+                           StormMetricRegistry metricRegistry) {
         super(topology, topoConf, taskToComponent, componentToSortedTasks,
               componentToStreamToFields, stormId, codeDir, pidDir,
               workerPort, workerTasks, defaultResources, userResources);
+        this.metricRegistry = metricRegistry;
         _taskId = taskId;
         _executorData = executorData;
         _registeredMetrics = registeredMetrics;
@@ -313,6 +316,7 @@ public class TopologyContext extends WorkerTopologyContext implements IMetricsCo
      * @return The IMetric argument unchanged.
      */
     @Deprecated
+    @Override
     public <T extends IMetric> T registerMetric(String name, T metric, int timeBucketSizeInSecs) {
         if (_openOrPrepareWasCalled.get()) {
             throw new RuntimeException("TopologyContext.registerMetric can only be called from within overridden " +
@@ -379,6 +383,7 @@ public class TopologyContext extends WorkerTopologyContext implements IMetricsCo
      * Convenience method for registering ReducedMetric.
      */
     @Deprecated
+    @Override
     public ReducedMetric registerMetric(String name, IReducer reducer, int timeBucketSizeInSecs) {
         return registerMetric(name, new ReducedMetric(reducer), timeBucketSizeInSecs);
     }
@@ -387,31 +392,37 @@ public class TopologyContext extends WorkerTopologyContext implements IMetricsCo
      * Convenience method for registering CombinedMetric.
      */
     @Deprecated
+    @Override
     public CombinedMetric registerMetric(String name, ICombiner combiner, int timeBucketSizeInSecs) {
         return registerMetric(name, new CombinedMetric(combiner), timeBucketSizeInSecs);
     }
 
+    @Override
     public Timer registerTimer(String name) {
-        return StormMetricRegistry.registry().timer(metricName(name));
+        return metricRegistry.registry().timer(metricName(name));
     }
 
+    @Override
     public Histogram registerHistogram(String name) {
-        return StormMetricRegistry.registry().histogram(metricName(name));
+        return metricRegistry.registry().histogram(metricName(name));
     }
 
+    @Override
     public Meter registerMeter(String name) {
-        return StormMetricRegistry.registry().meter(metricName(name));
+        return metricRegistry.registry().meter(metricName(name));
     }
 
+    @Override
     public Counter registerCounter(String name) {
-        return StormMetricRegistry.registry().counter(metricName(name));
+        return metricRegistry.registry().counter(metricName(name));
     }
 
-    public Gauge registerGauge(String name, Gauge gauge) {
-        return StormMetricRegistry.registry().register(metricName(name), gauge);
+    @Override
+    public <T> Gauge<T> registerGauge(String name, Gauge<T> gauge) {
+        return metricRegistry.registry().register(metricName(name), gauge);
     }
 
     private String metricName(String name) {
-        return StormMetricRegistry.metricName(name, this);
+        return metricRegistry.metricName(name, this);
     }
 }

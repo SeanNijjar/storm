@@ -12,6 +12,11 @@
 
 package org.apache.storm.trident.operation;
 
+import com.codahale.metrics.Counter;
+import com.codahale.metrics.Gauge;
+import com.codahale.metrics.Histogram;
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.Timer;
 import org.apache.storm.metric.api.CombinedMetric;
 import org.apache.storm.metric.api.ICombiner;
 import org.apache.storm.metric.api.IMetric;
@@ -48,15 +53,43 @@ public class TridentOperationContext implements IMetricsContext {
         return _topoContext.getThisTaskIndex();
     }
 
+    @Override
     public <T extends IMetric> T registerMetric(String name, T metric, int timeBucketSizeInSecs) {
         return _topoContext.registerMetric(name, metric, timeBucketSizeInSecs);
     }
 
+    @Override
     public ReducedMetric registerMetric(String name, IReducer reducer, int timeBucketSizeInSecs) {
         return _topoContext.registerMetric(name, new ReducedMetric(reducer), timeBucketSizeInSecs);
     }
 
+    @Override
     public CombinedMetric registerMetric(String name, ICombiner combiner, int timeBucketSizeInSecs) {
         return _topoContext.registerMetric(name, new CombinedMetric(combiner), timeBucketSizeInSecs);
+    }
+    
+    @Override
+    public Timer registerTimer(String name) {
+        return _topoContext.registerTimer(name);
+    }
+
+    @Override
+    public Histogram registerHistogram(String name) {
+        return _topoContext.registerHistogram(name);
+    }
+
+    @Override
+    public Meter registerMeter(String name) {
+        return _topoContext.registerMeter(name);
+    }
+
+    @Override
+    public Counter registerCounter(String name) {
+        return _topoContext.registerCounter(name);
+    }
+
+    @Override
+    public <T> Gauge<T> registerGauge(String name, Gauge<T> gauge) {
+        return _topoContext.registerGauge(name, gauge);
     }
 }

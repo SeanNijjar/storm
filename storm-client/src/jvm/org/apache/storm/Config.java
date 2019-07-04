@@ -315,6 +315,13 @@ public class Config extends HashMap<String, Object> {
     @isPositiveNumber
     public static final String TOPOLOGY_RAS_CONSTRAINT_MAX_STATE_SEARCH = "topology.ras.constraint.max.state.search";
     /**
+     * The maximum number of states that will be searched looking for a solution in the constraint solver strategy.
+     * Backward compatibility config value for old topologies
+     */
+    @isInteger
+    @isPositiveNumber
+    public static final String TOPOLOGY_RAS_CONSTRAINT_MAX_STATE_TRAVERSAL = "topology.ras.constraint.max.state.traversal";
+    /**
      * The maximum number of seconds to spend scheduling a topology using the constraint solver.  Null means no limit.
      */
     @isInteger
@@ -1410,6 +1417,12 @@ public class Config extends HashMap<String, Object> {
     @isPositiveNumber
     @isInteger
     public static final String STORM_BLOBSTORE_INPUTSTREAM_BUFFER_SIZE_BYTES = "storm.blobstore.inputstream.buffer.size.bytes";
+    /**
+     * What chuck size to use for storm client to upload dependency jars.
+     */
+    @isPositiveNumber
+    @isInteger
+    public static final String STORM_BLOBSTORE_DEPENDENCY_JAR_UPLOAD_CHUCK_SIZE_BYTES = "storm.blobstore.dependency.jar.upload.chuck.size.bytes";
     /**
      * FQCN of a class that implements {@code ISubmitterHook} @see ISubmitterHook for details.
      */
