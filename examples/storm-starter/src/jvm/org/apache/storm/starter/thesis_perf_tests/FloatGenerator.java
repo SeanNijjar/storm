@@ -11,6 +11,7 @@ public class FloatGenerator extends ValueGeneratorBase {
         super(_random, _ranges, _num_values_to_generate);
     }
 
+    @Override
     protected Object NextValueInRange(Integer range_index) {
         Float val = super.random.nextFloat();
         return val;

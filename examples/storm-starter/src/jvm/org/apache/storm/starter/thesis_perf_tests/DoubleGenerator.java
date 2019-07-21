@@ -11,7 +11,7 @@ public class DoubleGenerator extends ValueGeneratorBase {
         super(_random, _ranges, _num_values_to_generate);
     }
 
-
+    @Override
     protected Object NextValueInRange(Integer range_index) {
         Double val = super.random.nextDouble();
         return val;

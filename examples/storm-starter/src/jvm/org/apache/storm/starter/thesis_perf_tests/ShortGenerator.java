@@ -11,6 +11,7 @@ public class ShortGenerator extends ValueGeneratorBase {
         super(_random, _ranges, _num_values_to_generate);
     }
 
+    @Override
     protected Object NextValueInRange(Integer range_index) {
         Range range = super.ranges.get(range_index);
         long range_size = range.high - range.low;
